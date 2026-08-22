@@ -1,0 +1,9 @@
+{
+  "index_v2": "https://raw.githubusercontent.com/SongJunguo/mihon-hipmh-store/main/index.json",
+  "meta": {
+    "name": "SongJunguo Hipmh",
+    "shortName": "Hipmh",
+    "website": "https://github.com/SongJunguo/mihon-hipmh-store",
+    "signingKeyFingerprint": "5b6a2521c2e1f1f7c719b1af6a0a9d2edf524283df4d140cabee36c2e7076209"
+  }
+}

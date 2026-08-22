@@ -1,0 +1,36 @@
+{
+  "name": "SongJunguo Hipmh",
+  "badgeLabel": "Hipmh",
+  "signingKey": "5b6a2521c2e1f1f7c719b1af6a0a9d2edf524283df4d140cabee36c2e7076209",
+  "contact": {
+    "website": "https://github.com/SongJunguo/mihon-hipmh-store",
+    "discord": null
+  },
+  "extensionList": {
+    "extensions": [
+      {
+        "name": "Hipmh Private",
+        "packageName": "eu.kanade.tachiyomi.extension.zh.hipmhprivate",
+        "resources": {
+          "apkUrl": "https://raw.githubusercontent.com/SongJunguo/mihon-hipmh-store/main/apk/tachiyomi-zh.hipmhprivate-v1.6.2.apk",
+          "iconUrl": "https://raw.githubusercontent.com/SongJunguo/mihon-hipmh-store/main/icon/tachiyomi-zh.hipmhprivate.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": 2,
+        "versionName": "1.6.2",
+        "contentWarning": "MIXED",
+        "sources": [
+          {
+            "id": 3269986394831707997,
+            "name": "嬉皮漫画 (私人)",
+            "language": "zh",
+            "homeUrl": "https://m.hipmh.com",
+            "mirrorUrls": [],
+            "message": null
+          }
+        ]
+      }
+    ]
+  },
+  "extensionListUrl": null
+}
