@@ -1,0 +1,43 @@
+name: Repair Hipmh Store APK
+
+on:
+  push:
+    paths:
+      - '.publish-v163'
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Restore exact v1.6.3 APK
+        shell: bash
+        env:
+          ARTIFACT_URL: 'https://sdmntprwestus3.oaiusercontent.com/files/00000000-7cc4-81fd-912c-13b0d147ebda/raw?se=2026-08-22T14%3A37%3A00Z&sp=r&sv=2026-02-06&sr=b&scid=86779058-9b37-56b9-89e5-295b1add83c1&skoid=b869bb08-96ac-4184-ab38-9c45e2890c4c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-22T00%3A36%3A31Z&ske=2026-08-23T00%3A36%3A31Z&sks=b&skv=2026-02-06&sig=NUHnZ8SEtx9ehf6xypflG4xTcV9foercJl8WyOHCq8A%3D'
+          EXPECTED_SHA256: 'ac7ebc8e3c37024ed520f29d39108d3737633c991315dc6948b0436e06adb9dc'
+        run: |
+          set +e
+          curl -fL "$ARTIFACT_URL" -o /tmp/v163.zip
+          if [ $? -ne 0 ]; then echo 'download failed; leaving store unchanged'; exit 0; fi
+          rm -rf /tmp/v163 && mkdir -p /tmp/v163
+          unzip -q /tmp/v163.zip -d /tmp/v163
+          SRC=/tmp/v163/tachiyomi-zh.hipmhprivate-v1.6.3.apk
+          if [ ! -f "$SRC" ]; then echo 'APK missing; leaving store unchanged'; exit 0; fi
+          ACTUAL=$(sha256sum "$SRC" | awk '{print $1}')
+          echo "APK sha256=$ACTUAL"
+          if [ "$ACTUAL" != "$EXPECTED_SHA256" ]; then echo 'checksum mismatch; leaving store unchanged'; exit 0; fi
+          SIZE=$(stat -c%s "$SRC")
+          if [ "$SIZE" -ne 43939 ]; then echo "unexpected size=$SIZE; leaving store unchanged"; exit 0; fi
+          mkdir -p apk
+          cp "$SRC" apk/tachiyomi-zh.hipmhprivate-v1.6.3.apk
+          rm -rf .apk-parts
+          rm -f .publish-v163 .github/workflows/repair-apk.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'fix: restore complete v1.6.3 APK'
+          git push || true
