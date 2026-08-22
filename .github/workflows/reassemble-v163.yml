@@ -1,0 +1,39 @@
+name: Reassemble Hipmh v1.6.3 APK
+
+on:
+  push:
+    paths:
+      - 'chunks/v163.ready'
+
+permissions:
+  contents: write
+
+jobs:
+  reassemble:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Reassemble and verify APK
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -f chunks/v163.ready ]; then
+            echo 'No ready marker; nothing to do.'
+            exit 0
+          fi
+
+          cat chunks/v163.part* > /tmp/v163.b64
+          base64 -d /tmp/v163.b64 > apk/tachiyomi-zh.hipmhprivate-v1.6.3.apk
+          echo 'ac7ebc8e3c37024ed520f29d39108d3737633c991315dc6948b0436e06adb9dc  apk/tachiyomi-zh.hipmhprivate-v1.6.3.apk' | sha256sum -c -
+
+          # v1.6.2 in this Store was produced by the same truncated-text transport and is removed.
+          rm -f apk/tachiyomi-zh.hipmhprivate-v1.6.2.apk
+          rm -rf chunks
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A apk chunks
+          git commit -m 'fix: publish complete Hipmh Private v1.6.3 APK'
+          git push
