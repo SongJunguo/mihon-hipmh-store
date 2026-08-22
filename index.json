@@ -12,12 +12,12 @@
         "name": "Hipmh Private",
         "packageName": "eu.kanade.tachiyomi.extension.zh.hipmhprivate",
         "resources": {
-          "apkUrl": "https://raw.githubusercontent.com/SongJunguo/mihon-hipmh-store/main/apk/tachiyomi-zh.hipmhprivate-v1.6.3.apk",
+          "apkUrl": "https://raw.githubusercontent.com/SongJunguo/mihon-hipmh-store/main/apk/tachiyomi-zh.hipmhprivate-v1.6.4.apk",
           "iconUrl": "https://raw.githubusercontent.com/SongJunguo/mihon-hipmh-store/main/icon/tachiyomi-zh.hipmhprivate.png"
         },
         "extensionLib": "1.6",
-        "versionCode": 3,
-        "versionName": "1.6.3",
+        "versionCode": 4,
+        "versionName": "1.6.4",
         "contentWarning": "MIXED",
         "sources": [
           {
